@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  .text-sm, .text-tremor-default {
+    font-size: .875rem;
+    line-height: 1.25rem;
+}
+}
+
+code {
+  font-family: __Inter_36bd41, __Inter_Fallback_36bd41;
+}
+
+.bg {
+  background: linear-gradient(
+    to right,
+    rgb(0, 0, 0),
+    rgb(81, 137, 206),
+    rgb(161, 104, 162)
+  );
+}
+
+
+/* new wla  buyer bot */
+/* .transition-colors {
+  @apply transition-colors ease-[cubic-bezier(.4,0,0.2,1)] duration-[0.15s];
+} */
+
+.text-foreground {
+  @apply text-[hsl(var(--foreground))];
+}
+
+.text-muted-foreground {
+  @apply text-[hsl(var(--muted-foreground))];
+}
