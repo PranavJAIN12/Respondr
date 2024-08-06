@@ -41,3 +41,12 @@ code {
 .text-muted-foreground {
   @apply text-[hsl(var(--muted-foreground))];
 }
+
+.animation_animateCircle__lBdoU {
+  @apply absolute w-32 h-32 animate-[animation\_shadow-rotate\_\_hRrrn_1s_linear_infinite] bg-[#32c2a0] transition-opacity duration-[0.3s] ease-[ease-in-out] opacity-0 rounded-[100%] inset-0;
+}
+
+
+.bg-gradient-custom {
+  @apply bg-gradient-to-r from-[#2fb6e1] to-[#32c492];
+}
