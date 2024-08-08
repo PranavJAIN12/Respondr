@@ -2,7 +2,7 @@
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header'
 import Footer from './components/Footer'
-// import App from /'../'
+// import Home from './pages/Home'
 // import router from './routers'
 
 function App() {
