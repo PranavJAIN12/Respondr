@@ -9,9 +9,9 @@ const Header = () => {
         <Link to ={'/'}>
         <Logo />
         </Link>
-        <p className='text-black opacity-80 font-[14px] tracking-wider text-sm'>
-        Have questions? Email
-        <a href="mailto:founders@hyperbound.ai" className="underline">founders@hyperbound.ai</a>
+        <p className=' opacity-80 text-white font-[14px] tracking-wider text-sm'>
+        Have questions? Email 
+        <a href="mailto:founders@hyperbound.ai" className="underline text-white "> founders@hyperbound.ai</a>
         </p>
       </div>
       <div className='flex space-x-3 '>
