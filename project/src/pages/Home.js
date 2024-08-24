@@ -2,6 +2,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import logo from "../assests/logo/black-logo.svg";
+import './Home.css'
 
 import Male30 from "../assests/male/male-30.jpg";
 import Male15 from "../assests/male/male-15.jpg";
@@ -248,12 +249,12 @@ function Home() {
   };
 
   return (
-    <section className="flex w-full relative h-screen mt-16">
-      <div className="fixed z-50 w-[254px] md:flex md:flex-col bottom-0 h-full bg-[#FBFBFB] border-line-primary border-r hidden max-h-screen top-16">
-        <div className="space-x-3  pb-2 px-2 pt-4">
-          <div className="flex justify-between items-center ">
+    <section className="flex w-full relative h-screen mt-16 ">
+      <div className="fixed z-50 w-[254px] md:flex md:flex-col bottom-0 h-full bg-[#FBFBFB] border-line-primary border-r hidden max-h-screen top-16 logo-area" >
+        <div className="space-x-3  pb-2 px-2 pt-4 logo-area">
+          <div className="flex justify-between items-center logo-area ">
             <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-muted-foreground/10 hover:text-accent-foreground h-[34px] pointer-events-none p-2 cursor-pointer">
-              <div className="flex space-x-2 items-center">
+              <div className="flex space-x-2 items-center logo-area">
                 <a href>
                   <img
                     alt="square black logo"
@@ -303,7 +304,7 @@ function Home() {
           </button>
         </div>
 
-        <div className="flex flex-col justify-between pb-4 mt-4 h-full">
+        <div className="flex flex-col justify-between pb-4 mt-4 h-full navbar">
           <ul className="flex-none px-2">
             <li className="px-2 py-[7px] mb-[2px] z-40 text-[#878789]">
               <span>
@@ -1254,7 +1255,8 @@ function Home() {
         <div className="flex justify-center items-center w-full">
           <div className="w-full">
             <div>
-              <nav className="bg-white z-10 border-b top-14">
+            {/* top navbar area */}
+              <nav className="bg-white z-10 border-b top-14 logo-area">
                 <div className="flex flex-wrap justify-between items-center px-8 py-2">
                   <div className="flex space-x-4 items-start">
                     <div className="">
@@ -1298,7 +1300,7 @@ function Home() {
                         </nav>
 
                         {/* free demo */}
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 logo-area">
                           <div className="inline-flex items-center rounded-md border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80">
                             FREE DEMO
                           </div>
@@ -1379,7 +1381,7 @@ function Home() {
                       <div>
                         {buyers.map((buyer) => (
                           <div
-                            className="rounded-xl border bg-card text-card-foreground w-full md:w-[430px] ml-0 flex items-center relative shadow-sm transition-shadow duration-300 cursor-pointer hover:shadow-xl"
+                            className="rounded-xl  border bg-card text-card-foreground w-full md:w-[430px] ml-0 flex items-center relative shadow-sm transition-shadow duration-300 cursor-pointer hover:shadow-xl"
                             onClick={() => handleBuyerSelect(buyer)}
                           >
                             <button
@@ -1387,7 +1389,7 @@ function Home() {
                               id="radix-:rq:"
                               aria-haspopup="menu"
                               data-state="closed"
-                              className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-muted-foreground/10 hover:text-accent-foreground text-xs w-8 h-8 rounded-full p-0 absolute top-4 right-4"
+                              className="inline-flex items-center justify-center whitespace-nowrap font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-muted-foreground/10 hover:text-accent-foreground text-xs w-8 h-8 rounded-full p-0 absolute top-4 right-4 "
                             >
                               <span className="sr-only">Open menu</span>
                               <svg
@@ -1530,7 +1532,7 @@ function Home() {
                               </button>
                             </span>
                             <a className="h-min" href>
-                              <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-[34px] px-4 py-2">
+                              <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-[34px] px-4 py-2" disabled={true}>
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   width="24"

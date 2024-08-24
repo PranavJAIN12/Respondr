@@ -31,3 +31,8 @@
     --toastify-color-progress-warning: var(--toastify-color-warning);
     --toastify-color-progress-error: var(--toastify-color-error);
 }
+
+.area{
+    background-color: #212121;
+    color:#ececec
+}

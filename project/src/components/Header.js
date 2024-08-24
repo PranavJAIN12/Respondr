@@ -1,11 +1,12 @@
 import React from 'react'
 import Logo from './Logo'
 import { Link } from 'react-router-dom'
+import '../pages/Home.css'
 const Header = () => {
   return (
-    <div className='z-10 w-full items-center justify-center text-sm lg:flex'>  
+    <div className='z-10 w-full items-center justify-center text-sm lg:flex logo-area'>  
     <div className=' bg fixed top-0 w-full py-2 px-4 h-16 text-center flex justify-between items-center bg-primary/95 text-white z-50'>
-      <div className='flex space-x-3 items-center'>
+      <div className='flex space-x-3 items-center '>
         <Link to ={'/'}>
         <Logo />
         </Link>
