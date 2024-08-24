@@ -11,7 +11,7 @@ const Header = () => {
         </Link>
         <p className=' opacity-80 text-white font-[14px] tracking-wider text-sm'>
         Have questions? Email 
-        <a href="mailto:founders@hyperbound.ai" className="underline text-white "> founders@hyperbound.ai</a>
+        <a href="mailto:founders@hyperbound.ai" className="underline text-white "> founders@respondr.ai</a>
         </p>
       </div>
       <div className='flex space-x-3 '>
