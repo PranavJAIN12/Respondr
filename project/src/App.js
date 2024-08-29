@@ -10,7 +10,7 @@ function App() {
     <>
     <div className="area">
 
-    {/* <Header/>   */}
+    <Header/>  
     <main >
     <Outlet/>
     </main>
