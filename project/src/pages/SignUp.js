@@ -14,7 +14,7 @@ const SignUp = () => {
         alert(`Error: ${error.message}`);
       } else {
         console.log(`Signup successful`, data);
-        navigate("/login"); // Redirect to login screen
+        navigate("/login"); 
       }
     } catch (error) {
       console.error("Unexpected error during Google sign-up:", error);
