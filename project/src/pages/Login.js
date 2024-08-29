@@ -34,7 +34,10 @@ const Login = () => {
                 // Login successful
                 alert("Login successful!");
                 console.log("Login successful:", data);
+                sessionStorage.setItem('userToken', data.session.access_token);
+            sessionStorage.setItem('userId', data.user.id);
                 navigate('/home')
+
             }
         } catch (error) {
             console.error("Unexpected error:", error);
@@ -87,7 +90,7 @@ const Login = () => {
                 </button>
 
                 <p style={styles.signupLink}>
-                    Don't have an account? <Link to="/signup">Sign Up</Link>
+                    Don't have an account? <Link to="/">Sign Up</Link>
                 </p>
             </div>
         </div>

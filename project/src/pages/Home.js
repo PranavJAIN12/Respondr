@@ -13,6 +13,7 @@ import belinda from "../assests/female/belinda.jpg";
 import jane from "../assests/female/jane.png";
 import sarah from "../assests/female/sarah.png";
 import female36 from "../assests/female/female-36.jpg";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const [selectedBuyer, setSelectedBuyer] = useState(true);
@@ -30,7 +31,13 @@ function Home() {
   
   let recognition; // Move recognition outside the useEffect
 
-
+  const navigate = useNavigate();
+  const handleLogout=()=>{
+    console.log('btnclicked')
+    sessionStorage.clear();
+    alert("You have been logged out");
+    navigate('/login')
+  }
 
   useEffect(() => {
     if (window.SpeechRecognition || window.webkitSpeechRecognition) {
@@ -1245,10 +1252,35 @@ function Home() {
                 <p className="text-md font-medium">Integrations</p>
               </a>
             </li>
+
+            <li className='class="px-2 py-[7px] mb-[2px] z-40 text-[#2e3035] rounded-lg hover:bg-[#EDEDED] hover:duration-200 duration-300 hover:text-foreground"'>
+              <a className="flex justify-start items-center space-x-2" href>
+                <div className="flex items-center justify-center">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="lucide lucide-blocks w-4 h-4"
+                  >
+                    <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+                    <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
+                  </svg>
+                </div>
+                <button onClick={handleLogout} className="text-md font-medium">Logout</button>
+              </a>
+            </li>
           </ul>
         </div>
         <div className="Toastify"></div>
       </div>
+
+      
 
       {/* new  */}
       <div className="flex-1 z-10 ml-[0px] md:ml-[254px]">
