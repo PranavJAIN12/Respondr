@@ -53,12 +53,28 @@ setRememberMe(e.target.checked)
         }
     };
 
-    const handleGoogleLogin = () => {
+    const handleGoogleLogin = async() => {
         // Add Google login logic here
+        try {
+            const { data, error } = await supabase.auth.signInWithOAuth({
+                provider: 'google',
+            });
+
+            if (error) {
+                alert(`Error: ${error.message}`);
+            } else {
+                console.log(`Google login successful`, data);
+                navigate('/home'); 
+            }
+        } catch (error) {
+            console.error("Unexpected error during Google login:", error);
+            alert("Unexpected error occurred. Please try again later.");
+        }
     };
 
     const handleGithubLogin = () => {
         // Add GitHub login logic here
+        alert("in testing process")
     };
 
     return (
