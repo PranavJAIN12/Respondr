@@ -58,6 +58,9 @@ setRememberMe(e.target.checked)
         try {
             const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
+                options:{
+                    redirectTo: 'https://respondr.vercel.app/home',
+                }
             });
 
             if (error) {
