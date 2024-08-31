@@ -3,6 +3,7 @@ import App from '../App'
 import Home from '../pages/Home'
 import SignUp from '../pages/SignUp';
 import Login from '../pages/Login';
+import PrivateRoute from '../components/PrivateRoute';
 
 
 const  router = createBrowserRouter([
@@ -21,7 +22,7 @@ const  router = createBrowserRouter([
         
           {
             path:"home",
-           element:<Home/>,
+           element:<PrivateRoute><Home/></PrivateRoute>,
           }
            
            
