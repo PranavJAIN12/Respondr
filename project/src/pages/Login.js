@@ -30,7 +30,7 @@ setRememberMe(e.target.checked)
                 email: mail,
                 password: pass,
             },
-            { shouldCreateSession: rememberMe }
+            { shouldCreateSession: true }
         );
             if (error) {
                 // Handle login error
