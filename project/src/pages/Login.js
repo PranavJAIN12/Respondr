@@ -7,6 +7,7 @@ const Login = () => {
     const [mail, setMail] = useState("");
     const [pass, setPass] = useState("");
     const [loading, setLoading] = useState(false);
+    const [rememberMe, setRememberMe] = useState(false)
 
     const navigate = useNavigate();
 
@@ -17,6 +18,9 @@ const Login = () => {
     const handlePassChange = (e) => {
         setPass(e.target.value);
     };
+    const handleRememberMeChange=(e)=>{
+setRememberMe(e.target.checked)
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,7 +29,9 @@ const Login = () => {
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: mail,
                 password: pass,
-            });
+            },
+            { shouldCreateSession: rememberMe }
+        );
             if (error) {
                 // Handle login error
                 console.error("Login error:", error.message);
@@ -74,10 +80,24 @@ const Login = () => {
                         onChange={handlePassChange}
                         value={pass}
                     />
+
+<div style={styles.rememberMeContainer}>
+                        <input
+                            type="checkbox"
+                            id="rememberMe"
+                            checked={rememberMe}
+                            onChange={handleRememberMeChange}
+                            style={styles.checkbox}
+                        />
+                        <label htmlFor="rememberMe" style={styles.checkboxLabel}>
+                            Remember Me
+                        </label>
+                    </div>
                     <button type="submit" style={styles.submitButton} disabled={loading}>
                         {loading ? "Logging In..." : "Log In"}
                     </button>
                 </form>
+                
 
                 <div style={styles.divider}>or</div>
 
@@ -126,6 +146,17 @@ const styles = {
         fontSize: '16px',
         borderRadius: '5px',
         border: '1px solid #ccc',
+    },
+    rememberMeContainer: {
+        display: 'flex',
+        alignItems: 'center',
+        marginBottom: '15px',
+    },
+    checkbox: {
+        marginRight: '10px',
+    },
+    checkboxLabel: {
+        fontSize: '14px',
     },
     submitButton: {
         padding: '10px',
