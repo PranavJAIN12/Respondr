@@ -112,6 +112,10 @@ setRememberMe(e.target.checked)
                             Remember Me
                         </label>
                     </div>
+                    <p style={{marginBottom:'1rem', textAlign:'left'}}>
+    Forgot your password? <Link to="/forgot-password" style={{color:'blue'}}>Reset it here</Link>
+</p>
+
                     <button type="submit" style={styles.submitButton} disabled={loading}>
                         {loading ? "Logging In..." : "Log In"}
                     </button>
@@ -129,7 +133,7 @@ setRememberMe(e.target.checked)
                 </button>
 
                 <p style={styles.signupLink}>
-                    Don't have an account? <Link to="/">Sign Up</Link>
+                    Don't have an account? <Link to="/" style={{color:'blue'}}>Sign Up</Link>
                 </p>
             </div>
         </div>

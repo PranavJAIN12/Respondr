@@ -4,6 +4,8 @@ import Home from '../pages/Home'
 import SignUp from '../pages/SignUp';
 import Login from '../pages/Login';
 import PrivateRoute from '../components/PrivateRoute';
+import ForgotPassword from '../pages/ForgotPassword';
+import ResetPassword from '../pages/ResetPassword';
 
 
 const  router = createBrowserRouter([
@@ -18,6 +20,14 @@ const  router = createBrowserRouter([
            {
             path:"login",
            element:<Login/>,
+          },
+          {
+            path:"forgot-password",
+            element:<ForgotPassword/>
+          },
+          {
+            path: "reset-password",
+            element:<ResetPassword/>
           },
         
           {
