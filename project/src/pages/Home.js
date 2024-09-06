@@ -2,7 +2,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import logo from "../assests/logo/black-logo.svg";
-import './Home.css'
+// import './Home.css'
 
 import Male30 from "../assests/male/male-30.jpg";
 import Male15 from "../assests/male/male-15.jpg";
@@ -26,7 +26,8 @@ function Home() {
   const [callStatus] = useState('Start')
 
 
-  const api = process.env.REACT_APP_OPENAI_API_KEY;
+  // const api = process.env.REACT_APP_OPENAI_API_KEY;
+  const api = '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';
 
   
   let recognition; // Move recognition outside the useEffect
@@ -149,6 +150,7 @@ function Home() {
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = "en-US";
+      utterance.pitch= 2.5
       utterance.onend = () => {
         console.log("Speech synthesis finished, restarting recognition");
         if (!isRecognizing && recognition) {
