@@ -7,20 +7,13 @@ const Login = () => {
     const [mail, setMail] = useState("");
     const [pass, setPass] = useState("");
     const [loading, setLoading] = useState(false);
-    const [rememberMe, setRememberMe] = useState(false)
+    const [rememberMe, setRememberMe] = useState(false);
 
     const navigate = useNavigate();
 
-    const handleMailChange = (e) => {
-        setMail(e.target.value);
-    };
-
-    const handlePassChange = (e) => {
-        setPass(e.target.value);
-    };
-    const handleRememberMeChange=(e)=>{
-setRememberMe(e.target.checked)
-    }
+    const handleMailChange = (e) => setMail(e.target.value);
+    const handlePassChange = (e) => setPass(e.target.value);
+    const handleRememberMeChange = (e) => setRememberMe(e.target.checked);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -29,21 +22,16 @@ setRememberMe(e.target.checked)
             const { data, error } = await supabase.auth.signInWithPassword({
                 email: mail,
                 password: pass,
-            },
-            { shouldCreateSession: true }
-        );
+            }, { shouldCreateSession: true });
+            
             if (error) {
-                // Handle login error
                 console.error("Login error:", error.message);
                 alert(`Error: ${error.message}`);
             } else {
-                // Login successful
                 alert("Login successful!");
-                console.log("Login successful:", data);
                 sessionStorage.setItem('userToken', data.session.access_token);
-            sessionStorage.setItem('userId', data.user.id);
-                navigate('/home')
-
+                sessionStorage.setItem('userId', data.user.id);
+                navigate('/home');
             }
         } catch (error) {
             console.error("Unexpected error:", error);
@@ -53,21 +41,18 @@ setRememberMe(e.target.checked)
         }
     };
 
-    const handleGoogleLogin = async() => {
-        // Add Google login logic here
+    const handleGoogleLogin = async () => {
         try {
             const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
-                options:{
-                    redirectTo: 'https://respondr.vercel.app/home',
-                }
+                options: { redirectTo: 'https://respondr.vercel.app/home' }
             });
-
+            
             if (error) {
                 alert(`Error: ${error.message}`);
             } else {
                 console.log(`Google login successful`, data);
-                navigate('/home'); 
+                navigate('/home');
             }
         } catch (error) {
             console.error("Unexpected error during Google login:", error);
@@ -76,85 +61,122 @@ setRememberMe(e.target.checked)
     };
 
     const handleGithubLogin = () => {
-        // Add GitHub login logic here
-        alert("in testing process")
+        alert("in testing process");
     };
 
     return (
-        <div style={styles.container}>
-            <div style={styles.card}>
-                <h2 style={styles.header}>Log In</h2>
-                <form style={styles.form} onSubmit={handleSubmit}>
-                    <input
-                        type="email"
-                        placeholder="Email"
-                        style={styles.input}
-                        onChange={handleMailChange}
-                        value={mail}
-                    />
-                    <input
-                        type="password"
-                        placeholder="Password"
-                        style={styles.input}
-                        onChange={handlePassChange}
-                        value={pass}
-                    />
-
-<div style={styles.rememberMeContainer}>
-                        <input
-                            type="checkbox"
-                            id="rememberMe"
-                            checked={rememberMe}
-                            onChange={handleRememberMeChange}
-                            style={styles.checkbox}
-                        />
-                        <label htmlFor="rememberMe" style={styles.checkboxLabel}>
-                            Remember Me
-                        </label>
-                    </div>
-                    <p style={{marginBottom:'1rem', textAlign:'left'}}>
-    Forgot your password? <Link to="/forgot-password" style={{color:'blue'}}>Reset it here</Link>
-</p>
-
-                    <button type="submit" style={styles.submitButton} disabled={loading}>
-                        {loading ? "Logging In..." : "Log In"}
-                    </button>
-                </form>
-                
-
-                <div style={styles.divider}>or</div>
-
-                <button onClick={handleGoogleLogin} style={styles.socialButton}>
-                    <FaGoogle style={styles.icon} /> Log In with Google
-                </button>
-
-                <button onClick={handleGithubLogin} style={styles.socialButton}>
-                    <FaGithub style={styles.icon} /> Log In with GitHub
-                </button>
-
-                <p style={styles.signupLink}>
-                    Don't have an account? <Link to="/" style={{color:'blue'}}>Sign Up</Link>
+        <div style={styles.wrapper}>
+            {/* Background slogan */}
+            <div style={styles.infoSection}>
+                <h1 style={styles.title}>Respondr: Your AI Chatbot</h1>
+                <p style={styles.tagline}>Effortless AI-powered communication.</p>
+                <p style={styles.description}>
+                    Log in to Respondr and make the most of intelligent AI-driven conversations that can streamline your daily tasks.
                 </p>
+            </div>
+
+            <div style={styles.container}>
+                <div style={styles.card}>
+                    <h2 style={styles.header}>Log In</h2>
+                    <form style={styles.form} onSubmit={handleSubmit}>
+                        <input
+                            type="email"
+                            placeholder="Email"
+                            style={styles.input}
+                            onChange={handleMailChange}
+                            value={mail}
+                        />
+                        <input
+                            type="password"
+                            placeholder="Password"
+                            style={styles.input}
+                            onChange={handlePassChange}
+                            value={pass}
+                        />
+
+                        <div style={styles.rememberMeContainer}>
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                                checked={rememberMe}
+                                onChange={handleRememberMeChange}
+                                style={styles.checkbox}
+                            />
+                            <label htmlFor="rememberMe" style={styles.checkboxLabel}>
+                                Remember Me
+                            </label>
+                        </div>
+                        <p style={{ marginBottom: '1rem', textAlign: 'left' }}>
+                            Forgot your password? <Link to="/forgot-password" style={{ color: 'blue' }}>Reset it here</Link>
+                        </p>
+
+                        <button type="submit" style={styles.submitButton} disabled={loading}>
+                            {loading ? "Logging In..." : "Log In"}
+                        </button>
+                    </form>
+
+                    <div style={styles.divider}>or</div>
+
+                    <button onClick={handleGoogleLogin} style={styles.socialButton}>
+                        <FaGoogle style={styles.icon} /> Log In with Google
+                    </button>
+
+                    <button onClick={handleGithubLogin} style={styles.socialButton}>
+                        <FaGithub style={styles.icon} /> Log In with GitHub
+                    </button>
+
+                    <p style={styles.signupLink}>
+                        Don't have an account? <Link to="/" style={{ color: 'blue' }}>Sign Up</Link>
+                    </p>
+                </div>
             </div>
         </div>
     );
 };
 
 const styles = {
+    wrapper: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        height: "100vh",
+        backgroundColor: "#09090b",
+        color: "#fafafa",
+        padding: "0 50px",
+    },
+    infoSection: {
+        width: "45%",
+        textAlign: "left",
+    },
+    title: {
+        fontSize: "36px",
+        marginBottom: "10px",
+    },
+    tagline: {
+        fontSize: "18px",
+        marginBottom: "20px",
+        color: "#ccc",
+    },
+    description: {
+        fontSize: "16px",
+        lineHeight: "1.5",
+        color: "#ddd",
+    },
     container: {
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        backgroundColor: '#f0f2f5',
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "45%",
     },
     card: {
         width: '400px',
         padding: '20px',
         borderRadius: '10px',
-        backgroundColor: '#fff',
+        backgroundColor: '#131317',
         boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
         textAlign: 'center',
+        border: '1px solid white'
     },
     header: {
         marginBottom: '20px',
@@ -186,8 +208,8 @@ const styles = {
         fontSize: '16px',
         borderRadius: '5px',
         border: 'none',
-        backgroundColor: '#4CAF50',
-        color: '#fff',
+        backgroundColor: "#e2e2e2",
+    color: "#000",
         cursor: 'pointer',
         marginBottom: '15px',
         disabled: {
@@ -211,6 +233,7 @@ const styles = {
         cursor: 'pointer',
         marginBottom: '10px',
         backgroundColor: '#f9f9f9',
+        color: 'black'
     },
     icon: {
         marginRight: '10px',

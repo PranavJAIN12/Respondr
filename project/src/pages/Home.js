@@ -27,8 +27,6 @@ function Home() {
 
 
   const api = process.env.REACT_APP_OPENAI_API_KEY;
-
-
   
   let recognition; // Move recognition outside the useEffect
 
