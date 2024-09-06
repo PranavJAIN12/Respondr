@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from './client';
+import logo from '../assests/logo/new logo.png'
 
 export default function ForgotPassword() {
     const [email, setEmail] = useState("");
@@ -34,6 +35,7 @@ export default function ForgotPassword() {
         <div style={styles.wrapper}>
            
             <div style={styles.infoSection}>
+            <img src={logo} alt="logo" style={{marginBottom:'0px', height:'22rem'}}/>
                 <h1 style={styles.title}>Forgot Password?</h1>
                 <p style={styles.tagline}>Regain access to your account.</p>
                 <p style={styles.description}>

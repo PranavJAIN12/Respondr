@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle, FaGithub, FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { supabase } from "./client";
-import logo from '../assests/logo/download.png'
+// import logo from '../assests/logo/download.png'
+import logo from '../assests/logo/new logo.png'
 
 const SignUp = () => {
   const navigate = useNavigate();
@@ -61,6 +62,7 @@ const SignUp = () => {
     <div style={styles.wrapper}>
      
       <div style={styles.infoSection}>
+      <img src={logo} alt="logo" style={{marginBottom:'0px', height:'22rem'}}/>
         <h1 style={styles.title}>Respondr: Your AI Chatbot</h1>
         <p style={styles.tagline}>Unlock the power of AI-driven conversations.</p>
         <p style={styles.description}>
@@ -72,7 +74,7 @@ const SignUp = () => {
       <div style={styles.container}>
         <div style={styles.card}>
          
-          <img src={logo} alt="Respondr" style={styles.logo} height='10px' width='10px' />
+          {/* <img src={logo} alt="Respondr" style={styles.logo} height='10px' width='10px' /> */}
           <h2 style={styles.header}>Welcome to Respondr</h2>
           <p style={styles.subHeader}>Join Respondr and start chatting with your AI!</p>
 

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaGithub } from 'react-icons/fa';
 import { supabase } from './client';
+import logo from '../assests/logo/new logo.png'
 
 const Login = () => {
     const [mail, setMail] = useState("");
@@ -68,6 +69,7 @@ const Login = () => {
         <div style={styles.wrapper}>
             {/* Background slogan */}
             <div style={styles.infoSection}>
+            <img src={logo} alt="logo" style={{marginBottom:'0px', height:'22rem'}}/ >
                 <h1 style={styles.title}>Respondr: Your AI Chatbot</h1>
                 <p style={styles.tagline}>Effortless AI-powered communication.</p>
                 <p style={styles.description}>

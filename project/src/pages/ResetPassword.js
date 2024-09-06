@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { supabase } from './client';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assests/logo/new logo.png'
 
 const ResetPassword = () => {
     const [password, setPassword] = useState('');
@@ -38,6 +39,7 @@ const ResetPassword = () => {
         <div style={styles.wrapper}>
           
             <div style={styles.infoSection}>
+            <img src={logo} alt="logo" style={{marginBottom:'0px', height:'22rem'}}/>
                 <h1 style={styles.title}>Reset Your Password</h1>
                 <p style={styles.tagline}>Regain control of your account.</p>
                 <p style={styles.description}>
