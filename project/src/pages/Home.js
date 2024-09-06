@@ -27,7 +27,7 @@ function Home() {
 
 
   const api = process.env.REACT_APP_OPENAI_API_KEY;
-  // const api = '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';
+
 
   
   let recognition; // Move recognition outside the useEffect
