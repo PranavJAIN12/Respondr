@@ -69,7 +69,7 @@ const Login = () => {
         <div style={styles.wrapper}>
             {/* Background slogan */}
             <div style={styles.infoSection}>
-            <img src={logo} alt="logo" style={{marginBottom:'0px', height:'22rem'}}/ >
+            <img src={logo} alt="logo" style={{marginBottom:'0px', height:'22rem'}}/>
                 <h1 style={styles.title}>Respondr: Your AI Chatbot</h1>
                 <p style={styles.tagline}>Effortless AI-powered communication.</p>
                 <p style={styles.description}>
@@ -193,6 +193,8 @@ const styles = {
         fontSize: '16px',
         borderRadius: '5px',
         border: '1px solid #ccc',
+        backgroundColor: "#09090b",
+    color: "#fff",
     },
     rememberMeContainer: {
         display: 'flex',
