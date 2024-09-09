@@ -3,7 +3,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import logo from "../assests/logo/black-logo.svg";
 // import './Home.css'
-
+// import ring from '../assests/media/ringing.mp3'
 import Male30 from "../assests/male/male-30.jpg";
 import Male15 from "../assests/male/male-15.jpg";
 import venkat from "../assests/male/venkat.jpg";
@@ -23,20 +23,22 @@ function Home() {
   const [transcript, setTranscript] = useState("");
   const [aiResponse, setAiResponse] = useState("");
   const [isRecognizing, setIsRecognizing] = useState(false);
-  const [callStatus] = useState('Start')
-
+  const [callStatus] = useState("Start");
 
   const api = process.env.REACT_APP_OPENAI_API_KEY;
-  
+  // console.log(api)
+
   let recognition; // Move recognition outside the useEffect
 
+  // const ringtone = new Audio("ringing.mp3")
+
   const navigate = useNavigate();
-  const handleLogout=()=>{
-    console.log('btnclicked')
+  const handleLogout = () => {
+    console.log("btnclicked");
     sessionStorage.clear();
     alert("You have been logged out");
-    navigate('/login')
-  }
+    navigate("/login");
+  };
 
   useEffect(() => {
     if (window.SpeechRecognition || window.webkitSpeechRecognition) {
@@ -48,10 +50,27 @@ function Home() {
         setTranscript(newTranscript);
         recognition.stop(); // Stop recognition after receiving the transcript
         setIsRecognizing(false);
+        // ringtone.pause(); 
+        // ringtone.currentTime = 0;
         try {
           const response = await fetchAIResponse(newTranscript);
           setAiResponse(response);
           speakText(response);
+          if (
+            
+            response.toString().includes("cut") ||
+            response.toString().includes("Cut")
+            
+          ) {
+            stopRecognition();
+            console.log("call cut")
+
+          }
+          else{
+            console.log("statement cont..")
+            console.log(response);
+          }
+
         } catch (error) {
           setAiResponse(`Error: ${error.message}`);
           speakText(error.message);
@@ -67,12 +86,13 @@ function Home() {
           setIsRecognizing(true);
           // setCallStatus('End')
           console.log("Recognition started");
+          // ringtone.loop=true;
+          // ringtone.play();
         } else {
           console.log("Recognition is already active");
         }
       };
-      
-     
+
       const stopSpeaking = () => {
         if ("speechSynthesis" in window) {
           window.speechSynthesis.cancel(); // Stop any ongoing speech synthesis
@@ -87,6 +107,8 @@ function Home() {
           recognition.stop();
           setIsRecognizing(false);
           console.log("Recognition manually stopped");
+          // ringtone.pause();
+      // ringtone.currentTime = 0; 
           stopSpeaking();
         }
       };
@@ -95,16 +117,15 @@ function Home() {
       // }
       const startButton = document.getElementById("start-call-btn");
       const endButton = document.getElementById("end-call-btn");
-      
+
       if (startButton) {
         startButton.addEventListener("click", startRecognition);
       }
-      
+
       if (endButton) {
         endButton.addEventListener("click", stopRecognition);
-        
       }
-      
+
       // Cleanup event listener when the component unmounts or is updated
       return () => {
         if (startButton) {
@@ -130,7 +151,18 @@ function Home() {
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
-            messages: [{ role: "user", content: query }],
+            // messages: [{ role: "user", content: query }],
+            messages: [
+              {
+                role: "system",
+                content:
+                  "You are an AI buyer discussing project details. Follow these rules: 1) Only talk about project-related topics. 2) If the user mentions anything irrelevant or unnecessary, respond with 'cut the call, don't waste my time' and stop the conversation. 3) Keep your responses short and precise. 4) Do not engage in small talk or personal discussions. 5) Remember you have to talk Rude but Less Inquisitive",
+              },
+              {
+                role: "user",
+                content: query, 
+              },
+            ],
             max_tokens: 150,
           }),
         }
@@ -148,7 +180,7 @@ function Home() {
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = "en-US";
-      utterance.pitch= 2.5
+      utterance.pitch = 2.5;
       utterance.onend = () => {
         console.log("Speech synthesis finished, restarting recognition");
         if (!isRecognizing && recognition) {
@@ -161,8 +193,6 @@ function Home() {
       console.error("Text-to-Speech is not supported by your browser.");
     }
   };
-
-  
 
   const buyers = [
     {
@@ -257,7 +287,7 @@ function Home() {
 
   return (
     <section className="flex w-full relative h-screen mt-16 ">
-      <div className="fixed z-50 w-[254px] md:flex md:flex-col bottom-0 h-full bg-[#FBFBFB] border-line-primary border-r hidden max-h-screen top-16 logo-area" >
+      <div className="fixed z-50 w-[254px] md:flex md:flex-col bottom-0 h-full bg-[#FBFBFB] border-line-primary border-r hidden max-h-screen top-16 logo-area">
         <div className="space-x-3  pb-2 px-2 pt-4 logo-area">
           <div className="flex justify-between items-center logo-area ">
             <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-muted-foreground/10 hover:text-accent-foreground h-[34px] pointer-events-none p-2 cursor-pointer">
@@ -1272,7 +1302,9 @@ function Home() {
                     <path d="M10 21V8a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-5a1 1 0 0 0-1-1H3"></path>
                   </svg>
                 </div>
-                <button onClick={handleLogout} className="text-md font-medium">Logout</button>
+                <button onClick={handleLogout} className="text-md font-medium">
+                  Logout
+                </button>
               </a>
             </li>
           </ul>
@@ -1280,14 +1312,12 @@ function Home() {
         <div className="Toastify"></div>
       </div>
 
-      
-
       {/* new  */}
       <div className="flex-1 z-10 ml-[0px] md:ml-[254px]">
         <div className="flex justify-center items-center w-full">
           <div className="w-full">
             <div>
-            {/* top navbar area */}
+              {/* top navbar area */}
               <nav className="bg-white z-10 border-b top-14 logo-area">
                 <div className="flex flex-wrap justify-between items-center px-8 py-2">
                   <div className="flex space-x-4 items-start">
@@ -1564,7 +1594,10 @@ function Home() {
                               </button>
                             </span>
                             <a className="h-min" href>
-                              <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-[34px] px-4 py-2" disabled={true}>
+                              <button
+                                className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground shadow hover:bg-primary/90 h-[34px] px-4 py-2"
+                                disabled={true}
+                              >
                                 <svg
                                   xmlns="http://www.w3.org/2000/svg"
                                   width="24"
@@ -1713,7 +1746,8 @@ function Home() {
                                   >
                                     <button
                                       className=" bg-gradient-custom inline-flex items-center justify-center whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary hover:bg-primary/90 px-8 w-full text-white hover:text-white shadow-md text-base h-[52px] rounded-2xl cursor-pointer drop-shadow-2xl hover:opacity-80 transition-opacity duration-200 border border-white/50"
-                                      id="start-call-btn" disabled={isRecognizing}
+                                      id="start-call-btn"
+                                      disabled={isRecognizing}
                                     >
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -1731,18 +1765,28 @@ function Home() {
                                       </svg>
                                       <span>{callStatus} Call</span>
                                     </button>
-                                    <button 
-  className="bg-gradient-red inline-flex items-center justify-center whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-red-600 px-8 w-full text-white hover:text-white shadow-md text-base h-[52px] rounded-2xl cursor-pointer drop-shadow-2xl hover:opacity-80 transition-opacity duration-200 border border-white/50 my-3" id="end-call-btn" 
-  >
-  <span>End Call</span>
-</button>
-
+                                    <button
+                                      className="bg-gradient-red inline-flex items-center justify-center whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-red-600 px-8 w-full text-white hover:text-white shadow-md text-base h-[52px] rounded-2xl cursor-pointer drop-shadow-2xl hover:opacity-80 transition-opacity duration-200 border border-white/50 my-3"
+                                      id="end-call-btn"
+                                    >
+                                      <span>End Call</span>
+                                    </button>
                                   </span>
                                 </div>
                               </div>
                               <div className="responseData">
-                                <p className="mx-3 md:font-bold text-lg">Transcript: <span className="font-normal">{transcript}</span></p>
-                                <p className="mx-3 md:font-bold text-md">AI Response: <span className="font-normal">{aiResponse}</span></p>
+                                <p className="mx-3 md:font-bold text-lg">
+                                  Transcript:{" "}
+                                  <span className="font-normal">
+                                    {transcript}
+                                  </span>
+                                </p>
+                                <p className="mx-3 md:font-bold text-md">
+                                  AI Response:{" "}
+                                  <span className="font-normal">
+                                    {aiResponse}
+                                  </span>
+                                </p>
                               </div>
                             </div>
                           </div>

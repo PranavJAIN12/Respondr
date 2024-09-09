@@ -46,7 +46,7 @@ const Login = () => {
         try {
             const { data, error } = await supabase.auth.signInWithOAuth({
                 provider: 'google',
-                options: { redirectTo: 'https://respondr.vercel.app/home' }
+                // options: { redirectTo: 'https://localhost:3000/home' }
             });
             
             if (error) {
@@ -178,7 +178,8 @@ const styles = {
         backgroundColor: '#131317',
         boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
         textAlign: 'center',
-        border: '1px solid white'
+        border: '1px solid white',
+        boxShadow: '0 0 15px rgba(255, 255, 255, 1.5)',
     },
     header: {
         marginBottom: '20px',
@@ -248,3 +249,27 @@ const styles = {
 };
 
 export default Login;
+
+
+
+
+
+
+
+
+////////////////////////////
+// import  {useState} from 'react'
+// import { Auth } from '@supabase/auth-ui-react'
+// import { ThemeSupa } from '@supabase/auth-ui-shared'
+// import  supabase  from './client'
+
+
+
+// const Login = () => (
+//     <Auth
+//     supabaseClient={supabase}
+//    appearance={{ theme: ThemeSupa }}
+//     providers={['google', 'facebook', 'twitter']}
+//   />
+// )
+// export default Login;
