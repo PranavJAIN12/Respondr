@@ -30,9 +30,17 @@ const Login = () => {
                 alert(`Error: ${error.message}`);
             } else {
                 alert("Login successful!");
-                sessionStorage.setItem('userToken', data.session.access_token);
-                sessionStorage.setItem('userId', data.user.id);
-                navigate('/home');
+                console.log('User data:', data);
+                const fullName = data.user.user_metadata.full_name;
+                // Store token based on "Remember Me" checkbox
+                if (rememberMe) {
+                    localStorage.setItem('userToken', data.session.access_token);
+                    localStorage.setItem('userId', data.user.id);
+                } else {
+                    sessionStorage.setItem('userToken', data.session.access_token);
+                    sessionStorage.setItem('userId', data.user.id);
+                }
+                navigate('/home', { state: { fullName: fullName } });
             }
         } catch (error) {
             console.error("Unexpected error:", error);
@@ -41,6 +49,7 @@ const Login = () => {
             setLoading(false);
         }
     };
+    
 
     const handleGoogleLogin = async () => {
         try {

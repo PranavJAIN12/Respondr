@@ -8,7 +8,7 @@ import Male30 from "../assests/male/male-30.jpg";
 import Male15 from "../assests/male/male-15.jpg";
 import venkat from "../assests/male/venkat.jpg";
 import aaron from "../assests/male/aaron.jpg";
-
+import { useLocation } from "react-router-dom";
 import belinda from "../assests/female/belinda.jpg";
 import jane from "../assests/female/jane.png";
 import sarah from "../assests/female/sarah.png";
@@ -23,7 +23,9 @@ function Home() {
   const [transcript, setTranscript] = useState("");
   const [aiResponse, setAiResponse] = useState("");
   const [isRecognizing, setIsRecognizing] = useState(false);
-  const [callStatus] = useState("Start");
+  const [callStatus, setCallStatus] = useState("start");
+  
+  
 
   const api = process.env.REACT_APP_OPENAI_API_KEY;
   // console.log(api)
@@ -31,7 +33,8 @@ function Home() {
   let recognition; // Move recognition outside the useEffect
 
   // const ringtone = new Audio("ringing.mp3")
-
+  const location = useLocation();
+  const {fullName} = location.state || {}
   const navigate = useNavigate();
   const handleLogout = () => {
     console.log("btnclicked");
@@ -40,10 +43,12 @@ function Home() {
     navigate("/login");
   };
 
+ 
   useEffect(() => {
     if (window.SpeechRecognition || window.webkitSpeechRecognition) {
       recognition = new (window.SpeechRecognition ||
         window.webkitSpeechRecognition)();
+        recognition.continous = true; //i have used this for continous mic on
       recognition.lang = "en-US";
       recognition.onresult = async (event) => {
         const newTranscript = event.results[0][0].transcript;
@@ -84,10 +89,13 @@ function Home() {
       };
       const startRecognition = () => {
         if (!isRecognizing) {
+          
           recognition.start();
           setIsRecognizing(true);
           // setCallStatus('End')
           console.log("Recognition started");
+          setCallStatus("End")
+          
           // ringtone.loop=true;
           // ringtone.play();
         } else {
@@ -158,7 +166,7 @@ function Home() {
               {
                 role: "system",
                 content:
-                  "You are an AI buyer discussing project details. Follow these rules: 1) Only talk about project-related topics. 2) If the user mentions anything irrelevant or unnecessary, respond with 'cut the call, don't waste my time' and stop the conversation. 3) Keep your responses short and precise. 4) Do not engage in small talk or personal discussions. 5) Remember you have to talk Rude but Less Inquisitive",
+                  "You are an AI buyer discussing project details. Follow these rules: 1) Only talk about project-related topics and talk by thinking and speaking. 2) If the user mentions anything irrelevant or unnecessary, respond with 'cut the call, don't waste my time' and stop the conversation. 3) Keep your responses short and precise. 4) Do not engage in small talk or personal discussions. 5) Remember you have to talk Rude but Less Inquisitive. 6)On Hello, Hey always reply: Hii, Who's this?",
               },
               {
                 role: "user",
@@ -1370,9 +1378,11 @@ function Home() {
                           </div>
                         </div>
                       </div>
+                      <h1 className="font-bold">Welcome  {fullName || "guest"} </h1>
                       <p className="mt-2">
-                        Choose an AI buyer & start a roleplay conversation in 10
-                        secs
+                        Choose an AI buyer & start a roleplay conversation in 10 
+                        {/* secs<br/><p>Welcome {`user?.user_metadata?.full_name || 'Guest'`}</p> */}
+
                       </p>
                     </div>
                   </div>
@@ -1748,7 +1758,7 @@ function Home() {
                                   >
                                     <button
                                       className=" bg-gradient-custom inline-flex items-center justify-center whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary hover:bg-primary/90 px-8 w-full text-white hover:text-white shadow-md text-base h-[52px] rounded-2xl cursor-pointer drop-shadow-2xl hover:opacity-80 transition-opacity duration-200 border border-white/50"
-                                      id="start-call-btn"
+                                      id="start-call-btn" 
                                       disabled={isRecognizing}
                                     >
                                       <svg
@@ -1765,7 +1775,7 @@ function Home() {
                                       >
                                         <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
                                       </svg>
-                                      <span>{callStatus} Call</span>
+                                      <span> {callStatus} Call </span>
                                     </button>
                                     <button
                                       className="bg-gradient-red inline-flex items-center justify-center whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-red-600 px-8 w-full text-white hover:text-white shadow-md text-base h-[52px] rounded-2xl cursor-pointer drop-shadow-2xl hover:opacity-80 transition-opacity duration-200 border border-white/50 my-3"
