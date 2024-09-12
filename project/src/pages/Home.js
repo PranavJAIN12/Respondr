@@ -63,7 +63,9 @@ function Home() {
             
           ) {
             stopRecognition();
+            stopSpeaking();
             console.log("call cut")
+            return;
 
           }
           else{
