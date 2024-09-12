@@ -23,7 +23,7 @@ function Home() {
   const [transcript, setTranscript] = useState("");
   const [aiResponse, setAiResponse] = useState("");
   const [isRecognizing, setIsRecognizing] = useState(false);
-  const [callStatus, setCallStatus] = useState("start");
+  const [callStatus,setCallStatus] = useState("start");
   
   
 
@@ -51,12 +51,23 @@ function Home() {
         recognition.continous = true; //i have used this for continous mic on
       recognition.lang = "en-US";
       recognition.onresult = async (event) => {
+       
+        console.log(transcript);
+        console.log(chatHistory)
+        // chatHistory.push(response)
         const newTranscript = event.results[0][0].transcript;
         setTranscript(newTranscript);
         recognition.stop(); // Stop recognition after receiving the transcript
         setIsRecognizing(false);
         // ringtone.pause(); 
         // ringtone.currentTime = 0;
+        chatHistory.push({
+          role: "system",
+          content:
+            newTranscript,
+
+        },)
+
         try {
           const response = await fetchAIResponse(newTranscript);
           setAiResponse(response);
@@ -92,9 +103,9 @@ function Home() {
           
           recognition.start();
           setIsRecognizing(true);
-          // setCallStatus('End')
+          setCallStatus('End')
           console.log("Recognition started");
-          setCallStatus("End")
+          
           
           // ringtone.loop=true;
           // ringtone.play();
@@ -122,19 +133,19 @@ function Home() {
           stopSpeaking();
         }
       };
-      // if(callStatus==='End'){
-      //   document.getElementById('start-call-btn').onClick(stopRecognition);
-      // }
+      if(callStatus==='End'){
+        document.getElementById('start-call-btn').addEventListener("click",stopRecognition);
+      }
       const startButton = document.getElementById("start-call-btn");
-      const endButton = document.getElementById("end-call-btn");
+      // const endButton = document.getElementById("end-call-btn");
 
       if (startButton) {
         startButton.addEventListener("click", startRecognition);
       }
 
-      if (endButton) {
-        endButton.addEventListener("click", stopRecognition);
-      }
+      // if (endButton) {
+      //   endButton.addEventListener("click", stopRecognition);
+      // }
 
       // Cleanup event listener when the component unmounts or is updated
       return () => {
@@ -149,6 +160,16 @@ function Home() {
       console.error("Speech Recognition is not supported by your browser.");
     }
   }, [isRecognizing]); // Dependency array to track recognition status
+
+  const chatHistory = [{
+    role: "system",
+    content:
+      "you are friendly sales rep, talk to people, If the user acts rude, respond with 'cut the call, don't waste my time' and stop the conversation.",
+  },
+  ]
+
+  
+
   const fetchAIResponse = async (query) => {
     try {
       const response = await fetch(
@@ -161,18 +182,11 @@ function Home() {
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
-            // messages: [{ role: "user", content: query }],
-            messages: [
-              {
-                role: "system",
-                content:
-                  "You are an AI buyer discussing project details. Follow these rules: 1) Only talk about project-related topics and talk by thinking and speaking. 2) If the user mentions anything irrelevant or unnecessary, respond with 'cut the call, don't waste my time' and stop the conversation. 3) Keep your responses short and precise. 4) Do not engage in small talk or personal discussions. 5) Remember you have to talk Rude but Less Inquisitive. 6)On Hello, Hey always reply: Hii, Who's this?",
-              },
-              {
-                role: "user",
-                content: query, 
-              },
-            ],
+            
+            messages:  chatHistory,
+              
+              
+            
             max_tokens: 150,
           }),
         }
@@ -190,7 +204,7 @@ function Home() {
     if ("speechSynthesis" in window) {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = "en-US";
-      utterance.pitch = 2.5;
+      utterance.pitch = 0.5;
       utterance.onend = () => {
         console.log("Speech synthesis finished, restarting recognition");
         if (!isRecognizing && recognition) {
