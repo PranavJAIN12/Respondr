@@ -23,9 +23,7 @@ function Home() {
   const [transcript, setTranscript] = useState("");
   const [aiResponse, setAiResponse] = useState("");
   const [isRecognizing, setIsRecognizing] = useState(false);
-  const [callStatus,setCallStatus] = useState("start");
-  
-  
+  const [callStatus, setCallStatus] = useState("start");
 
   const api = process.env.REACT_APP_OPENAI_API_KEY;
   // console.log(api)
@@ -34,7 +32,7 @@ function Home() {
 
   // const ringtone = new Audio("ringing.mp3")
   const location = useLocation();
-  const {fullName} = location.state || {}
+  const { fullName } = location.state || {};
   const navigate = useNavigate();
   const handleLogout = () => {
     console.log("btnclicked");
@@ -43,52 +41,43 @@ function Home() {
     navigate("/login");
   };
 
- 
   useEffect(() => {
     if (window.SpeechRecognition || window.webkitSpeechRecognition) {
       recognition = new (window.SpeechRecognition ||
         window.webkitSpeechRecognition)();
-        recognition.continous = true; //i have used this for continous mic on
+      recognition.continous = true; //i have used this for continous mic on
       recognition.lang = "en-US";
       recognition.onresult = async (event) => {
-       
         console.log(transcript);
-        console.log(chatHistory)
+        console.log(chatHistory);
         // chatHistory.push(response)
         const newTranscript = event.results[0][0].transcript;
         setTranscript(newTranscript);
         recognition.stop(); // Stop recognition after receiving the transcript
         setIsRecognizing(false);
-        // ringtone.pause(); 
+        // ringtone.pause();
         // ringtone.currentTime = 0;
         chatHistory.push({
           role: "system",
-          content:
-            newTranscript,
-
-        },)
+          content: newTranscript,
+        });
 
         try {
           const response = await fetchAIResponse(newTranscript);
           setAiResponse(response);
           speakText(response);
           if (
-            
             response.toString().includes("cut") ||
             response.toString().includes("Cut")
-            
           ) {
             stopRecognition();
             stopSpeaking();
-            console.log("call cut")
+            console.log("call cut");
             return;
-
-          }
-          else{
-            console.log("statement cont..")
+          } else {
+            console.log("statement cont..");
             console.log(response);
           }
-
         } catch (error) {
           setAiResponse(`Error: ${error.message}`);
           speakText(error.message);
@@ -100,13 +89,11 @@ function Home() {
       };
       const startRecognition = () => {
         if (!isRecognizing) {
-          
           recognition.start();
           setIsRecognizing(true);
-          setCallStatus('End')
+          setCallStatus("End");
           console.log("Recognition started");
-          
-          
+
           // ringtone.loop=true;
           // ringtone.play();
         } else {
@@ -124,17 +111,19 @@ function Home() {
       };
       const stopRecognition = () => {
         if (isRecognizing) {
-          console.log("Stopping recognition");
           recognition.stop();
+          console.log("Stopping recognition");
           setIsRecognizing(false);
           console.log("Recognition manually stopped");
           // ringtone.pause();
-      // ringtone.currentTime = 0; 
+          // ringtone.currentTime = 0;
           stopSpeaking();
         }
       };
-      if(callStatus==='End'){
-        document.getElementById('start-call-btn').addEventListener("click",stopRecognition);
+      if (callStatus === "End") {
+        document
+          .getElementById("start-call-btn")
+          .addEventListener("click", stopRecognition);
       }
       const startButton = document.getElementById("start-call-btn");
       // const endButton = document.getElementById("end-call-btn");
@@ -161,14 +150,13 @@ function Home() {
     }
   }, [isRecognizing]); // Dependency array to track recognition status
 
-  const chatHistory = [{
-    role: "system",
-    content:
-      "you are friendly sales rep, talk to people, If the user acts rude, respond with 'cut the call, don't waste my time' and stop the conversation.",
-  },
-  ]
-
-  
+  const chatHistory = [
+    {
+      role: "system",
+      content:
+        "you are rude AI buyer, talk to people, main role to buy the projects, If the user acts rude, respond with 'cut the call, don't waste my time' and stop the conversation. Talk related to projects only",
+    },
+  ];
 
   const fetchAIResponse = async (query) => {
     try {
@@ -182,11 +170,9 @@ function Home() {
           },
           body: JSON.stringify({
             model: "gpt-3.5-turbo",
-            
-            messages:  chatHistory,
-              
-              
-            
+
+            messages: chatHistory,
+
             max_tokens: 150,
           }),
         }
@@ -205,6 +191,7 @@ function Home() {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.lang = "en-US";
       utterance.pitch = 0.5;
+
       utterance.onend = () => {
         console.log("Speech synthesis finished, restarting recognition");
         if (!isRecognizing && recognition) {
@@ -1392,11 +1379,12 @@ function Home() {
                           </div>
                         </div>
                       </div>
-                      <h1 className="font-bold">Welcome  {fullName || "guest"} </h1>
+                      <h1 className="font-bold">
+                        Welcome {fullName || "guest"}{" "}
+                      </h1>
                       <p className="mt-2">
-                        Choose an AI buyer & start a roleplay conversation in 10 
+                        Choose an AI buyer & start a roleplay conversation in 10
                         {/* secs<br/><p>Welcome {`user?.user_metadata?.full_name || 'Guest'`}</p> */}
-
                       </p>
                     </div>
                   </div>
@@ -1771,9 +1759,18 @@ function Home() {
                                     className="w-full"
                                   >
                                     <button
-                                      className=" bg-gradient-custom inline-flex items-center justify-center whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 bg-primary hover:bg-primary/90 px-8 w-full text-white hover:text-white shadow-md text-base h-[52px] rounded-2xl cursor-pointer drop-shadow-2xl hover:opacity-80 transition-opacity duration-200 border border-white/50"
-                                      id="start-call-btn" 
+                                      className=" bg-gradient-custom inline-flex items-center justify-center whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50  hover:bg-primary/90 px-8 w-full text-white hover:text-white shadow-md text-base h-[52px] rounded-2xl cursor-pointer drop-shadow-2xl hover:opacity-80 transition-opacity duration-200 border border-white/50"
+                                      id="start-call-btn"
                                       disabled={isRecognizing}
+                                      style={{
+                                        backgroundColor: callStatus === "end"?"red":"green",
+                                            
+                                        color: "white",
+                                        padding: "10px 20px",
+                                        border: "none",
+                                        borderRadius: "5px",
+                                        cursor: "pointer",
+                                      }}
                                     >
                                       <svg
                                         xmlns="http://www.w3.org/2000/svg"
@@ -1791,12 +1788,12 @@ function Home() {
                                       </svg>
                                       <span> {callStatus} Call </span>
                                     </button>
-                                    <button
+                                    {/* <button
                                       className="bg-gradient-red inline-flex items-center justify-center whitespace-nowrap font-medium focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 hover:bg-red-600 px-8 w-full text-white hover:text-white shadow-md text-base h-[52px] rounded-2xl cursor-pointer drop-shadow-2xl hover:opacity-80 transition-opacity duration-200 border border-white/50 my-3"
                                       id="end-call-btn"
                                     >
                                       <span>End Call</span>
-                                    </button>
+                                    </button> */}
                                   </span>
                                 </div>
                               </div>
