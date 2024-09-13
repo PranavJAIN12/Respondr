@@ -3,6 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { FaGoogle, FaGithub, FaUser, FaEnvelope, FaLock } from "react-icons/fa";
 import { supabase } from "./client";
 // import logo from '../assests/logo/download.png'
+import feat1 from '../assests/media/feature1.webp'
+import feat2 from '../assests/media/feature2.webp'
 import logo from '../assests/logo/new logo.png'
 
 const SignUp = () => {
@@ -59,6 +61,9 @@ const SignUp = () => {
   };
 
   return (
+    <div>
+
+    
     <div style={styles.wrapper}>
      
       <div style={styles.infoSection}>
@@ -130,6 +135,40 @@ const SignUp = () => {
         </div>
       </div>
     </div>
+
+
+    <div style={styles.featuresSection}>
+        <h2 style={styles.sectionHeader}>Key Features</h2>
+        <div style={styles.featureContainer}>
+          <div style={styles.feature}>
+            <img src={feat1} alt="Feature 1" style={styles.featureImage} />
+            <p>Real-time AI Conversations</p>
+          </div>
+          <div style={styles.feature}>
+            <img src={feat2} alt="Feature 2" style={styles.featureImage} />
+            <p>Seamless User Experience</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Model Information Section */}
+      <div style={styles.modelSection}>
+        <h2 style={styles.sectionHeader}>Powered by GPT-based AI</h2>
+        <img src={logo} alt="AI Model" style={styles.modelImage} />
+        <p style={styles.modelText}>
+          Respondr is built using OpenAI’s powerful GPT models, ensuring that your conversations are as natural as possible. The AI is trained to handle various topics and adapt to your communication needs.
+        </p>
+      </div>
+      
+      {/* Call-to-Action Section */}
+      <div style={styles.ctaSection}>
+        <h2 style={styles.sectionHeader}>Ready to Start?</h2>
+        <p>Join Respondr today and experience the future of AI communication!</p>
+        <Link to="/login" style={styles.ctaButton}>Get Started</Link>
+      </div>
+
+    </div>
+    
   );
 };
 
@@ -256,6 +295,61 @@ const styles = {
   },
   loginLink: {
     marginTop: "15px",
+  },
+  featuresSection: {
+    padding: "40px 0",
+    backgroundColor: "#131317",
+    color: "#fafafa",
+    textAlign: "center",
+  },
+  sectionHeader: {
+    fontSize: "32px",
+    marginBottom: "20px",
+  },
+  featureContainer: {
+    display: "flex",
+    justifyContent: "center",
+    gap: "40px",
+  },
+  feature: {
+    width: "200px",
+    textAlign: "center",
+  },
+  featureImage: {
+    width: "100%",
+    borderRadius: "10px",
+  },
+  modelSection: {
+    padding: "40px 0",
+    backgroundColor: "#09090b",
+    textAlign: "center",
+    color: "#ddd",
+  },
+  modelImage: {
+    width: "400px",
+    marginBottom: "20px",
+    margin:'auto'
+  },
+  modelText: {
+    maxWidth: "600px",
+    margin: "0 auto",
+    fontSize: "18px",
+    lineHeight: "1.5",
+  },
+  ctaSection: {
+    padding: "50px 0",
+    textAlign: "center",
+    backgroundColor: "#183D3D",
+    color: "#fff",
+  },
+  ctaButton: {
+    padding: "15px 30px",
+    backgroundColor: "#5C8374",
+    color: "#fff",
+    textDecoration: "none",
+    borderRadius: "5px",
+    fontSize: "18px",
+    margin:'3rem'
   },
 };
 

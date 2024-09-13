@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "./Logo";
-import newLogo from "../assests/logo/new logo.png";
+
 import { Link } from "react-router-dom";
 import "../pages/Home.css";
 const Header = () => {
@@ -9,7 +9,7 @@ const Header = () => {
       <div className=" bg fixed top-0 w-full py-2 px-4 h-16 text-center flex justify-between items-center bg-primary/95 text-white z-50">
         <div className="flex space-x-3 items-center ">
           <Link to={"/"}>
-            <newLogo />
+           
             <Logo />
           </Link>
           <p className=" opacity-80 text-white font-[14px] tracking-wider text-sm">
@@ -32,10 +32,10 @@ const Header = () => {
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="lucide lucide-calendar-check w-4 h-4 mr-2"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-calendar-check w-4 h-4 mr-2"
             >
               <path d="M8 2v4"></path>
               <path d="M16 2v4"></path>
