@@ -73,6 +73,7 @@ function Home() {
             stopRecognition();
             stopSpeaking();
             console.log("call cut");
+            setCallStatus("start")
             return;
           } else {
             console.log("statement cont..");
@@ -118,6 +119,7 @@ function Home() {
           // ringtone.pause();
           // ringtone.currentTime = 0;
           stopSpeaking();
+          // setCallStatus(!callStatus)
         }
       };
       if (callStatus === "End") {
@@ -154,9 +156,10 @@ function Home() {
     {
       role: "system",
       content:
-        "you are rude AI buyer, talk to people, main role to buy the projects, If the user acts rude, respond with 'cut the call, don't waste my time' and stop the conversation. Talk related to projects only",
+        "You are rude AI buyer, talk to people, main role to buy the projects, If the user acts rude, respond with 'cut the call, don't waste my time' and stop the conversation. Talk related to projects only",
     },
   ];
+  
 
   const fetchAIResponse = async (query) => {
     try {

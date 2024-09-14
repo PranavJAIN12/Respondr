@@ -42,8 +42,8 @@ const Header = () => {
               <rect width="18" height="18" x="3" y="4" rx="2"></rect>
               <path d="M3 10h18"></path>
               <path d="m9 16 2 2 4-4"></path>
-            </svg>
-            Book a demo to build your own bots
+            </svg><Link to="/book-demo">
+            Book a demo to build your own bots</Link>
           </button>
         </div>
       </div>

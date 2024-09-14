@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FaGoogle, FaGithub } from 'react-icons/fa';
 import { supabase } from './client';
 import logo from '../assests/logo/new logo.png'
+import emailjs from '@emailjs/browser';
 
 const Login = () => {
     const [mail, setMail] = useState("");
@@ -88,7 +89,7 @@ const Login = () => {
 
             <div style={styles.container}>
                 <div style={styles.card}>
-                    <h2 style={styles.header}>Log In</h2>
+                    <h2 style={styles.header}>LogIn with RespondrAI</h2>
                     <form style={styles.form} onSubmit={handleSubmit}>
                         <input
                             type="email"
@@ -185,7 +186,7 @@ const styles = {
         padding: '20px',
         borderRadius: '10px',
         backgroundColor: '#131317',
-        boxShadow: '0 2px 10px rgba(0, 0, 0, 0.1)',
+        
         textAlign: 'center',
         border: '1px solid white',
         boxShadow: '0 0 15px rgba(255, 255, 255, 1.5)',

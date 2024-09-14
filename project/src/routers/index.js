@@ -6,6 +6,7 @@ import Login from '../pages/Login';
 import PrivateRoute from '../components/PrivateRoute';
 import ForgotPassword from '../pages/ForgotPassword';
 import ResetPassword from '../pages/ResetPassword';
+import BookDemo from '../pages/BookDemo';
 
 
 const  router = createBrowserRouter([
@@ -28,6 +29,10 @@ const  router = createBrowserRouter([
           {
             path: "reset-password",
             element:<ResetPassword/>
+          },
+          {
+            path: "book-demo",
+            element:<BookDemo/>
           },
         
           {
