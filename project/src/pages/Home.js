@@ -164,19 +164,20 @@ function Home() {
   const fetchAIResponse = async (query) => {
     try {
       const response = await fetch(
-        "https://api.openai.com/v1/chat/completions",
+        "https://openrouter.ai/api/v1/chat/completions",
         {
           method: "POST",
           headers: {
-            Authorization: "Bearer " + api,
+            Authorization:
+            "Bearer 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",
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            model: "gpt-3.5-turbo",
+            model: "google/gemini-2.0-flash-exp:free",
 
             messages: chatHistory,
 
-            max_tokens: 150,
+            max_tokens: 100,
           }),
         }
       );
@@ -1115,7 +1116,7 @@ function Home() {
               </span>
             </li>
 
-            {/* Coaching */}
+           
             <div data-state="closed">
               <div className="w-full">
                 <button
@@ -1815,7 +1816,7 @@ function Home() {
                                 </p>
                               </div>
                             </div>
-                          </div>
+                            </div>
 
                           <div className="Toastify"></div>
                         </div>
@@ -1828,6 +1829,7 @@ function Home() {
           </div>
         </div>
       </div>
+      
     </section>
   );
 }
